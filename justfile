@@ -44,6 +44,7 @@ commit MESSAGE="commit": commit-succes
 
 gitupdate: 
     git fetch
+    git pull
     git status
     git add *
     git commit -m "commit auto"
