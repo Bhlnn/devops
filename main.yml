@@ -1,0 +1,56 @@
+# .github/workflows/division.yml
+name: Division
+
+on:
+  workflow_dispatch:
+    inputs:
+      nombre:
+        description: "Nombre de départ"
+        required: true
+        default: "64"
+
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    outputs:
+      resultat: ${{ steps.calcul.outputs.resultat }}
+    steps:
+      - id: calcul
+        env:
+          NOMBRE: ${{ inputs.nombre }}
+        run: |
+          R=$((NOMBRE / 2))
+          echo "Dev : $NOMBRE / 2 = $R"
+          if [ $((R % 2)) -ne 0 ]; then
+            echo "Résultat impair, arrêt de la pipeline"
+            exit 1
+          fi
+          echo "resultat=$R" >> "$GITHUB_OUTPUT"
+
+  val:
+    needs: dev
+    runs-on: ubuntu-latest
+    outputs:
+      resultat: ${{ steps.calcul.outputs.resultat }}
+    steps:
+      - id: calcul
+        env:
+          NOMBRE: ${{ needs.dev.outputs.resultat }}
+        run: |
+          R=$((NOMBRE / 4))
+          echo "Val : $NOMBRE / 4 = $R"
+          if [ $((R % 2)) -ne 0 ]; then
+            echo "Résultat impair, arrêt de la pipeline"
+            exit 1
+          fi
+          echo "resultat=$R" >> "$GITHUB_OUTPUT"
+
+  prod:
+    needs: val
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          NOMBRE: ${{ needs.val.outputs.resultat }}
+        run: |
+          R=$((NOMBRE / 8))
+          echo "Prod : $NOMBRE / 8 = $R"
