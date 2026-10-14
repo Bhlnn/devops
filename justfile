@@ -46,6 +46,7 @@ gitupdate:
     git status
     git add *
     git commit -m "commit auto"
+    git push
 
 
 log:
