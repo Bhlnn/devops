@@ -40,7 +40,7 @@ add:
 
 
 commit MESSAGE="commit": commit-succes
-    git commit -m {{MESSAGE}}
+    git commit -m "{{MESSAGE}}"
 
 
 log:
