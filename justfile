@@ -43,6 +43,7 @@ commit MESSAGE="commit": commit-succes
     git commit -m "{{MESSAGE}}"
 
 gitupdate: 
+    git fetch
     git status
     git add *
     git commit -m "commit auto"

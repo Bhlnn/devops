@@ -1,5 +1,5 @@
 # .github/workflows/division.yml
-name: Division
+name: Main
 
 on:
   workflow_dispatch:
