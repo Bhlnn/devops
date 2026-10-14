@@ -42,6 +42,11 @@ add:
 commit MESSAGE="commit": commit-succes
     git commit -m "{{MESSAGE}}"
 
+gitupdate: 
+    git status
+    git add *
+    git commit -m "commit auto"
+
 
 log:
     #!/bin/bash -x
